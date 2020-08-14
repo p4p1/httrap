@@ -1,0 +1,40 @@
+.TH HTTRAP 1 httrap\-0.1
+.SH NAME
+httrap \- http request trap
+.SH SYNOPSIS
+.B httrap
+.RB [ \-hs ]
+.RB [ \-p
+.IR port no ]
+.RB [ \-f
+.IR file name ]
+.RB [ \-d
+.IR dir name ]
+.P
+.SH DESCRIPTION
+.B httrap
+is a http request server that logs all of the request sent to it inside of a
+file named by default "trap.log" inside of the /tmp folder. This program is
+mainly used to debug payloads.
+.SH OPTIONS
+.TP
+.B \-h
+display the usage.
+.TP
+.B \-s
+silent mode run as a background process the server.
+.TP
+.B \-p
+set the port number.
+.TP
+.B \-f
+set the file name.
+.TP
+.B \-d
+set the directory location.
+.SH DEFAULT
+By default httrap saves the logs inside of the /tmp folder as a file trap.log,
+to change this feature you can use the -f and -d options or by changing the
+variables inside of include/config.h. You can also change the redirection of the
+page by changing the REDIRECT_URL variable in config.h
+

@@ -13,7 +13,7 @@
 #include <string.h>
 #include <netinet/in.h>
 
-#include "trap.h"
+#include "config.h"
 
 struct trap *init_trap(void)
 {

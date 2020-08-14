@@ -15,13 +15,11 @@
 #include <sys/stat.h>
 #include <string.h>
 
-#include "trap.h"
+#include "config.h"
 
 static void usage(char *arg)
 {
-	printf("%s [-p PORT_NUMBER] [-h]\n"
-		"IT'S A http TRAP\n"
-		"Default port: 4040\n", arg);
+	printf("Usage: %s [-hs] [-p port no] [-f file name] [-d dir name]\n", arg);
 }
 
 static void loop(struct trap *trp)
@@ -37,6 +35,7 @@ static void loop(struct trap *trp)
 		read(tmps, buf, BUFSIZ);
 		fprintf(fp, "%s\n", buf);
 		fflush(fp);
+		write(tmps, response, strlen(response));
 		close(tmps);
 	}
 	fclose(fp);
@@ -72,6 +71,7 @@ static int arg_parse(struct trap *trp, char ch, char *name)
 {
 	if (ch == 'h') {
 		usage(name);
+		exit(EXIT_SUCCESS);
 	} else if (ch == 'p') {
 		trp->port = atoi(optarg);
 	} else if (ch == 's') {

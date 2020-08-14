@@ -13,6 +13,14 @@
 
 #define FILE_NAME "trap.log"
 #define DEFAULT_DIR "/tmp"
+#define REDIRECT_URL "https://google.com"
+
+static const char response[] = "HTTP/1.1 301 Moved Permanently\n\r"
+								"Server: httrap/0.1 (Linux)\n\r"
+								"Location: " REDIRECT_URL "\n\r"
+								"Content-Type: text/html; charset=iso-8859-1\n\r";
+
+
 
 enum verb { VERBOSE_OFF = 0,
 			VERBOSE_ON = 1 };
