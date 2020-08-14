@@ -8,6 +8,7 @@
 
 #include <stdio.h>
 #include <sys/socket.h>
+#include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
 #include <netinet/in.h>
@@ -35,6 +36,14 @@ struct trap *init_trap(void)
 		fprintf(stderr, "Error: setsockopt error.\n");
 		return (NULL);
 	}
+	if ((tmp->file = strdup(FILE_NAME)) == NULL) {
+		free(tmp);
+		return (NULL);
+	}
+	if ((tmp->dir = strdup(DEFAULT_DIR)) == NULL) {
+		free(tmp);
+		return (NULL);
+	}
 	return (tmp);
 }
 
@@ -54,4 +63,5 @@ void serv_set(struct trap *tp)
 		fprintf(stderr, "Error: listen error.\n");
 		exit(EXIT_FAILURE);
 	}
+	chdir(tp->dir);
 }

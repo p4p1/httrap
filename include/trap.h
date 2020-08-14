@@ -11,6 +11,9 @@
 
 #include <netinet/in.h>
 
+#define FILE_NAME "trap.log"
+#define DEFAULT_DIR "/tmp"
+
 enum verb { VERBOSE_OFF = 0,
 			VERBOSE_ON = 1 };
 
@@ -20,6 +23,9 @@ struct trap {
 
 	int				socket;
 	struct sockaddr_in	address;
+
+	char	*file;
+	char	*dir;
 };
 
 struct trap *init_trap(void);

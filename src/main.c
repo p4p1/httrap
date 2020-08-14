@@ -11,8 +11,9 @@
 #include <stdlib.h>
 #include <getopt.h>
 #include <sys/socket.h>
-#include <sys/stat.h>
 #include <sys/types.h>
+#include <sys/stat.h>
+#include <string.h>
 
 #include "trap.h"
 
@@ -30,8 +31,9 @@ static void loop(struct trap *trp)
 	char buf[BUFSIZ];
 	FILE *fp = NULL;
 
-	fp = fopen("trap.log", "w+");
+	fp = fopen(trp->file, "w+");
 	while ((tmps = accept(trp->socket, (struct sockaddr *)&trp->address, &addrlen)) > 0) {
+		memset(buf, 0, BUFSIZ);
 		read(tmps, buf, BUFSIZ);
 		fprintf(fp, "%s\n", buf);
 		fflush(fp);
@@ -60,10 +62,30 @@ static int daemond(void) {
 		fprintf(stderr, "Error: setsid\n");
 		exit(EXIT_FAILURE);
 	}
-	chdir("/tmp");
 	close(STDIN_FILENO);
 	close(STDOUT_FILENO);
 	close(STDERR_FILENO);
+	return (0);
+}
+
+static int arg_parse(struct trap *trp, char ch, char *name)
+{
+	if (ch == 'h') {
+		usage(name);
+	} else if (ch == 'p') {
+		trp->port = atoi(optarg);
+	} else if (ch == 's') {
+		if (daemond() < 0)
+			return (-1);
+	} else if (ch == 'f') {
+		free(trp->file);
+		trp->file = optarg;
+	} else if (ch == 'd') {
+		free(trp->dir);
+		trp->dir = optarg;
+	} else {
+		return (-1);
+	}
 	return (0);
 }
 
@@ -74,17 +96,10 @@ int main(int argc, char *argv[])
 
 	if (trp == NULL)
 		return (-1);
-	while ((ch = getopt(argc, argv, "p:h")) != -1 ) {
-		if (ch == 'h')
-			usage(argv[0]);
-		else if (ch == 'p')
-			trp->port = atoi(optarg);
-		else
+	while ((ch = getopt(argc, argv, "p:f:d:hs")) != -1 )
+		if (arg_parse(trp, ch, argv[0]) < 0)
 			return (-1);
-	}
 	serv_set(trp);
-	if (daemond() < 0)
-		return (-1);
 	loop(trp);
 	free(trp);
 	return (0);

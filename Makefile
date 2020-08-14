@@ -19,6 +19,9 @@ all:			$(NAME)
 $(NAME):		$(OBJ) $(INCLUDE)
 	$(CC) $(FLAGS) -o $(NAME) $(OBJ) $(LFLAGS)
 
+install:
+	cp -r ./$(NAME) /usr/local/bin/$(NAME)
+
 .c.o:
 	$(CC) $(FLAGS) -o $@ -c $<
 
@@ -31,4 +34,4 @@ fclean:			clean
 
 re: fclean all
 
-.PHONY: clean fclean re
+.PHONY: clean fclean re install
