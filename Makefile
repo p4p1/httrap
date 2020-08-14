@@ -18,7 +18,7 @@ all:			$(NAME)
 $(NAME):		$(OBJ) $(INCLUDE)
 	$(CC) $(FLAGS) -o $(NAME) $(OBJ)
 
-install:
+install: all
 	cp -r ./$(NAME) /usr/local/bin/$(NAME)
 	mkdir -p /usr/local/share/man/man1
 	cp -r httrap.1 /usr/local/share/man/man1/httrap.1
