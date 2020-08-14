@@ -12,7 +12,7 @@
 #include <netinet/in.h>
 
 #define FILE_NAME "trap.log"
-#define DEFAULT_DIR "/tmp"
+#define DEFAULT_DIR "/var/log/"
 #define REDIRECT_URL "https://google.com"
 
 static const char response[] = "HTTP/1.1 301 Moved Permanently\n\r"
