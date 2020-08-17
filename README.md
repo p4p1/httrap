@@ -6,7 +6,7 @@ simple web trap to monitor requests.
 ## Usage:
 ```
 Usage: ./httrap [-hs] [-p port no] [-f file name] [-d dir name]
-Usage: ./log_httrap [-hl] [-m METHOD] [-f LOG_FILE_NAME] [-d LOG_FILE_DIR]
+Usage: ./json_httrap [-hl] [-m METHOD] [-f LOG_FILE_NAME] [-d LOG_FILE_DIR]
 ```
 
 ## Installation:
