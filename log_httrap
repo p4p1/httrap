@@ -11,12 +11,62 @@
 
 LOG_FILE_NAME=httrap.log
 FILE_DIR=/var/log/$LOG_FILE_NAME
+METHOD="GET"
+LOOP=0
 
-while [ 1 ] ; do
-	string=$(cat $FILE_DIR  | grep "GET" | tail -n 1 | tr "\n" " " | tr "\r" " ")
+function usage() {
+	echo "Usage: $0 [-hl] [-m METHOD] [-f LOG_FILE_NAME] [-d LOG_FILE_DIR]" 1>&2
+	echo "Defaults:" 1>&2
+	echo -e "\tMETHOD=GET" 1>&2
+	echo -e "\tLOG_FILE_NAME=httrap.log" 1>&2
+	echo -e "\tLOG_FILE_DIR=/var/log/" 1>&2
+	exit -1
+}
+
+function get_json() {
+	if [ ! -f $FILE_DIR ]; then
+		echo "Error: $FILE_DIR no such file or directory" 1>&2
+		usage
+	fi
+	string=$(cat $FILE_DIR  | grep $METHOD | tail -n 1 | tr "\n" " " | tr "\r" " ")
 	dat=$(cat $FILE_DIR | grep "time" | tail -n 1 | cut -d":" -f2,3,4)
 	data="{\"time\":\"${dat}\",\"latest_log\":\"${string}\"}"
-	printf "$data"
-	echo
-done
+	if [ ! -z "${string}" ]; then
+		printf "$data"
+		echo
+	fi
+}
 
+while getopts "hlm:f:d:" o; do
+	case "${o}" in
+		h)
+			usage
+			;;
+		l)
+			LOOP=1
+			;;
+		m)
+			METHOD=${OPTARG}
+			;;
+		f)
+			LOG_FILE_NAME=${OPTARG}
+			;;
+		d)
+			FILE_DIR=${OPTARG}/${LOG_FILE_NAME}
+			;;
+		*)
+			usage
+			;;
+	esac
+done
+shift $((OPTIND-1))
+
+if (( $LOOP )); then
+	while [ 1 ]; do
+		get_json
+	done
+else
+	get_json
+fi
+
+exit 0
