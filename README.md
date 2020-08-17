@@ -10,8 +10,11 @@ Usage: ./json_httrap [-hl] [-m METHOD] [-f LOG_FILE_NAME] [-d LOG_FILE_DIR]
 ```
 
 ## Installation:
+Copy paste those commands to a terminal
 ```
-$ sudo make clean install
+git clone https://github.com/p4p1/httrap.git /tmp/httrap
+sudo make clean install -C /tmp/httrap
+echo "Installation complete, enjoy the software :)"
 ```
 
 ## Example log file output
