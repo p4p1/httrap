@@ -20,6 +20,7 @@ $(NAME):		$(OBJ) $(INCLUDE)
 
 install: all
 	cp -r ./$(NAME) /usr/local/bin/$(NAME)
+	cp -r log_httrap /usr/local/bin/log_httrap
 	mkdir -p /usr/local/share/man/man1
 	cp -r httrap.1 /usr/local/share/man/man1/httrap.1
 	chmod 644 /usr/local/share/man/man1/httrap.1

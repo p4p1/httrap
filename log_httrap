@@ -1,0 +1,22 @@
+#!/bin/bash
+# httrap_run
+# Created on: Mon 17 Aug 2020 08:50:52 PM UTC
+#
+#  ____   __  ____  __
+# (  _ \ /. |(  _ \/  )
+#  )___/(_  _))___/ )(
+# (__)    (_)(__)  (__)
+#
+# Description:
+
+LOG_FILE_NAME=httrap.log
+FILE_DIR=/var/log/$LOG_FILE_NAME
+
+while [ 1 ] ; do
+	string=$(cat $FILE_DIR  | grep "GET" | tail -n 1 | tr "\n" " " | tr "\r" " ")
+	dat=$(cat $FILE_DIR | grep "time" | tail -n 1 | cut -d":" -f2,3,4)
+	data="{\"time\":\"${dat}\",\"latest_log\":\"${string}\"}"
+	printf "$data"
+	echo
+done
+
