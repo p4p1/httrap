@@ -14,6 +14,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <string.h>
+#include <time.h>
 
 #include "config.h"
 
@@ -31,9 +32,14 @@ static void loop(struct trap *trp)
 
 	fp = fopen(trp->file, "w+");
 	while ((tmps = accept(trp->socket, (struct sockaddr *)&trp->address, &addrlen)) > 0) {
+		time_t t = time(NULL);
+		struct tm tm = *localtime(&t);
+
 		memset(buf, 0, BUFSIZ);
 		read(tmps, buf, BUFSIZ);
-		fprintf(fp, "%s\n", buf);
+		fprintf(fp, "time:%d-%02d-%02d %02d:%02d:%02d\n%s\n",
+				tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday, tm.tm_hour,
+				tm.tm_min, tm.tm_sec, buf);
 		fflush(fp);
 		write(tmps, response, strlen(response));
 		close(tmps);
