@@ -7,7 +7,11 @@ simple web trap to monitor requests.
 ```
 Usage: ./httrap [-hs] [-p port no] [-f file name] [-d dir name]
 Usage: ./log_httrap [-hl] [-m METHOD] [-f LOG_FILE_NAME] [-d LOG_FILE_DIR]
+```
 
+## Installation:
+```
+$ sudo make clean install
 ```
 
 ## Example log file output

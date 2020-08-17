@@ -1,4 +1,4 @@
-.TH HTTRAP 1 httrap\-0.1
+.TH HTTRAP 1 httrap\-0.5
 .SH NAME
 httrap \- http request trap
 .SH SYNOPSIS
@@ -16,6 +16,10 @@ httrap \- http request trap
 is a http request server that logs all of the request sent to it inside of a
 file named by default "trap.log" inside of the /tmp folder. This program is
 mainly used to debug payloads.
+.SH INSTALLATION
+The installation is quite simple just run the following command:
+.TP
+.B sudo make clean install
 .SH OPTIONS
 .TP
 .B \-h
@@ -37,4 +41,8 @@ By default httrap saves the logs inside of the /tmp folder as a file trap.log,
 to change this feature you can use the -f and -d options or by changing the
 variables inside of include/config.h. You can also change the redirection of the
 page by changing the REDIRECT_URL variable in config.h
+.SH JSON OUTPUT
+To get json output, look at the
+.B json_httrap
+script
 
