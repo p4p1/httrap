@@ -24,6 +24,7 @@ install: all
 	mkdir -p /usr/local/share/man/man1
 	cp -r httrap.1 /usr/local/share/man/man1/httrap.1
 	chmod 644 /usr/local/share/man/man1/httrap.1
+	@echo "Installation complete, enjoy httrap :)"
 
 .c.o:
 	$(CC) $(FLAGS) -o $@ -c $<
