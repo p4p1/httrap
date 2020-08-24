@@ -32,8 +32,7 @@ function get_json() {
 	dat=$(cat $FILE_DIR | grep "time" | tail -n 1 | cut -d":" -f2,3,4)
 	data="{\"time\":\"${dat}\",\"latest_log\":\"${string}\"}"
 	if [ ! -z "${string}" ]; then
-		printf "$data"
-		echo
+		echo "$data"
 	fi
 }
 
