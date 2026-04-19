@@ -1,6 +1,8 @@
 # httrap
 simple web trap to monitor requests.
 
+_this was turned into xss_bomb -> b0mb it is now EOL clearly_
+
 ![trap boiz](https://raw.githubusercontent.com/p4p1/trap/master/assets/logo.jpg)
 
 ## Usage:
